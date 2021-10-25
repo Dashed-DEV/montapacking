@@ -27,4 +27,4 @@ $product = $apiclient->getProduct('-sku-');
 var_dump($product);
 ```
 
-####Forked from arjennz
+Forked from arjennz
