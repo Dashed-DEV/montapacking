@@ -9,7 +9,6 @@ This project can easily be installed through Composer.
 
 ```
 composer require qubiqx/montapacking
-Forked from arjennz
 ```
 
 ## Example: Get product
@@ -27,3 +26,5 @@ $apiclient = new Qubiqx\Montapacking\Client($username, $password);
 $product = $apiclient->getProduct('-sku-');
 var_dump($product);
 ```
+
+####Forked from arjennz
