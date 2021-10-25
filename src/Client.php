@@ -1,9 +1,9 @@
 <?php 
  
-namespace ArjenNZ\Montapacking;
+namespace Qubiqx\Montapacking;
 
 /**
-*  @author ArjenNZ
+*  @author Qubiqx
 */
  
 class Client
@@ -285,7 +285,9 @@ class Client
  
     protected function sendRequest($endpoint, $params = [], $method = self::METHOD_GET, $filters = [])
     {
-        $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client([
+            'timeout' => 30
+        ]);
  
         $url = $this->getUrl($endpoint);
         
