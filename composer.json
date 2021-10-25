@@ -1,12 +1,12 @@
 {
-    "name": "arjennz/montapacking",
+    "name": "qubiqx/montapacking",
     "description": "Montapacking API client library for PHP. Montapacking is an ecommerce fullfillment specialist based in the Netherlands.",
-    "keywords": ["makkelijkemoestuin", "montapacking", "api"],
+    "keywords": ["montapacking", "api"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Arjen Medema",
-            "email": "arjenmedema@gmail.com"
+            "name": "Robin van Maasakker",
+            "email": "robin@qubiqx.com"
         }
     ],
     "type": "project",
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ArjenNZ\\Montapacking\\": "src/"
+            "Qubiqx\\Montapacking\\": "src/"
         }
     }
 }
