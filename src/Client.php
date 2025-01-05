@@ -3,17 +3,17 @@
 namespace Qubiqx\Montapacking;
 
 /**
-*  @author Qubiqx
-*/
+ *  @author Qubiqx
+ */
 
 class Client
 {
     protected $username;
     protected $password;
 
-    protected $apihost = 'api.montapacking.nl/rest';
+    protected $apihost = 'api-v6.monta.nl';
     protected $protocol = 'https';
-    protected $apiversion = 'v6';
+    protected $apiversion = '';
     protected $useragent = 'Montapacking PHP API Client (montapacking.nl)';
 
     const METHOD_GET = 'GET';
@@ -291,6 +291,7 @@ class Client
 
         $url = $this->getUrl($endpoint);
 
+        $url = str($url)->replace('//', '/')->toString();
 
         $response = $client->request($method, $url, [
             'auth' => [
