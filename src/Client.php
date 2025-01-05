@@ -1,127 +1,127 @@
-<?php 
- 
+<?php
+
 namespace Qubiqx\Montapacking;
 
 /**
 *  @author Qubiqx
 */
- 
+
 class Client
 {
     protected $username;
     protected $password;
- 
+
     protected $apihost = 'api.montapacking.nl/rest';
     protected $protocol = 'https';
-    protected $apiversion = 'v5';
+    protected $apiversion = 'v6';
     protected $useragent = 'Montapacking PHP API Client (montapacking.nl)';
- 
+
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
     const METHOD_PUT = 'PUT';
     const METHOD_DELETE = 'DELETE';
- 
- 
+
+
     public function __construct($username, $password)
     {
         $this->username = $username;
         $this->password = $password;
     }
- 
+
     public function getHealth()
     {
         return $this->sendRequest('/health');
     }
- 
+
     public function getProduct($sku)
     {
         return $this->sendRequest('/product/' . $sku);
     }
- 
+
     public function getProductByBarcode($barcode)
     {
         return $this->sendRequest('/product?barcode=' . $barcode);
     }
- 
+
     public function getProductStock($sku)
     {
         return $this->sendRequest('/product/' . $sku . '/stock');
     }
- 
+
     public function getProductUpdatesSince($time, $skus = [])
     {
         $date = $this->formatTime($time);
- 
+
         return $this->sendRequest('/product/updated_since/' . $date);
     }
- 
+
     public function addProduct($params)
     {
         return $this->sendRequest('/product', $params, self::METHOD_POST);
     }
- 
+
     public function updateProduct($sku, $params)
     {
         return $this->sendRequest('/product/' . $sku, $params, self::METHOD_PUT);
     }
- 
+
     public function deleteBarcodeFromProduct($sku, $barcode)
     {
         return $this->sendRequest('/product/' . $sku . '/barcode/' . $barcode, [], self::METHOD_DELETE);
     }
- 
+
     public function deleteAllBarcodesFromProduct($sku)
     {
         return $this->sendRequest('/product/' . $sku . '/barcode', [], self::METHOD_DELETE);
     }
- 
+
     public function deleteProduct($sku)
     {
         return $this->sendRequest('/product/' . $sku, [], self::METHOD_DELETE);
     }
- 
+
     public function getDeal($code)
     {
         return $this->sendRequest('/deal/' . $code);
     }
- 
+
     public function addDeal($params)
     {
         return $this->sendRequest('/deal', $params, self::METHOD_POST);
     }
- 
+
     public function updateDeal($code, $params)
     {
         return $this->sendRequest('/deal/' . $code, $params, self::METHOD_PUT);
     }
- 
+
     public function getOrder($orderid)
     {
         return $this->sendRequest('/order/' . $orderid);
     }
- 
+
     public function getOrderUpdatesSince($time)
     {
         $date = $this->formatTime($time);
- 
+
         return $this->sendRequest('/order/updated_since/' . $date);
     }
- 
+
     public function addOrder($params)
     {
         return $this->sendRequest('/order', $params, self::METHOD_POST);
     }
- 
+
     public function updateOrder($orderid, $params)
     {
         return $this->sendRequest('/order/' . $orderid, $params, self::METHOD_PUT);
     }
- 
+
     public function deleteOrder($orderid, $params)
     {
         return $this->sendRequest('/order/' . $orderid, $params, self::METHOD_DELETE);
     }
- 
+
     public function forgetOrder($orderid, $params)
     {
         return $this->sendRequest('/order' . $orderid . '/forget', $params, self::METHOD_POST);
@@ -131,7 +131,7 @@ class Client
     {
         return $this->sendRequest('/order/' . $orderid . '/return');
     }
- 
+
     public function getSerialsOrder($orderid)
     {
         return $this->sendRequest('/order/' . $orderid . '/serials');
@@ -250,14 +250,14 @@ class Client
     public function getReturnsSince($time)
     {
         $date = $this->formatTime($time);
- 
+
         return $this->sendRequest('/return/since/' . $date);
     }
 
     public function getReturnUpdatesSince($time)
     {
         $date = $this->formatTime($time);
- 
+
         return $this->sendRequest('/return/updated_since/' . $date);
     }
 
@@ -274,7 +274,7 @@ class Client
     public function getOrderEventsSince($time)
     {
         $date = $this->formatTime($time);
- 
+
         return $this->sendRequest('/orderevents/since/' . $date);
     }
 
@@ -282,16 +282,16 @@ class Client
     {
         return $this->sendRequest('/shippingoptions');
     }
- 
+
     protected function sendRequest($endpoint, $params = [], $method = self::METHOD_GET, $filters = [])
     {
         $client = new \GuzzleHttp\Client([
             'timeout' => 30
         ]);
- 
+
         $url = $this->getUrl($endpoint);
-        
-        
+
+
         $response = $client->request($method, $url, [
             'auth' => [
                 $this->username,
@@ -299,13 +299,13 @@ class Client
             ],
             'json' => $params
         ]);
-        
- 
+
+
         $data = json_decode($response->getBody()->getContents());
- 
+
         return $data;
     }
- 
+
     protected function getUrl($endpoint)
     {
         return $this->protocol . '://' . $this->apihost . '/' . $this->apiversion . $endpoint;
@@ -314,7 +314,7 @@ class Client
     protected function formatTime($time)
     {
         $datetime = new \DateTime($time);
- 
+
         return $datetime->format('Y-m-d\TH:i:s');
     }
 }
